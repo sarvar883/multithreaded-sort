@@ -19,8 +19,6 @@ async function execute() {
 
     const sortedArray: number[] = await sort(input_array, THREADS);
 
-    // input_array.sort((a, b) => a - b);
-
     const timeSpent: number = Math.floor(performance.now() - start);
 
     console.log('Time to sort =', timeSpent, 'ms');
