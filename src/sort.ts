@@ -7,14 +7,14 @@ export async function sort(input_array: NumbersArray, THREADS: number): Promise<
 
     const promises: Array<Promise<NumbersArray>> = [];
 
-    for(let i = 0; i < THREADS; i++) {
+    for (let i = 0; i < THREADS; i++) {
         // divide large array to smaller chunks
         // each chunk will be sorted in a separate thread by worker
         const startIndex: number = Math.floor(i * input_array.length / THREADS);
 
         const endIndex: number = Math.floor((i + 1) * input_array.length / THREADS);
 
-        const chunk: number[] = input_array.slice(startIndex, endIndex);
+        const chunk: NumbersArray = input_array.slice(startIndex, endIndex);
 
         // assign chunks to worker threads
         promises.push(runService(chunk));
@@ -23,13 +23,13 @@ export async function sort(input_array: NumbersArray, THREADS: number): Promise<
     // execute workers
     const sorted_chunks = await Promise.all(promises);
 
-    const sortedArray: NumbersArray = [];
+    let sortedArray: NumbersArray = [];
 
     // combine all sorted chunks and form the final sorted array
-    for(let i = 0; i < sorted_chunks.length; i = i + 2) {
+    for (let i = 0; i < sorted_chunks.length; i = i + 2) {
         const mergedArray: NumbersArray = mergeArrays(sorted_chunks[i], sorted_chunks[i + 1]);
 
-        sortedArray.concat(mergedArray);
+        sortedArray = sortedArray.concat(mergedArray);
     }
 
     return sortedArray;
