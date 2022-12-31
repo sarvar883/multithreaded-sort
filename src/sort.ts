@@ -23,13 +23,11 @@ export async function sort(input_array: NumbersArray, THREADS: number): Promise<
     // execute workers
     const sorted_chunks = await Promise.all(promises);
 
-    let sortedArray: NumbersArray = [];
-
     // combine all sorted chunks and form the final sorted array
-    for (let i = 0; i < sorted_chunks.length; i = i + 2) {
-        const mergedArray: NumbersArray = mergeArrays(sorted_chunks[i], sorted_chunks[i + 1]);
+    let sortedArray: NumbersArray = sorted_chunks[0];
 
-        sortedArray = sortedArray.concat(mergedArray);
+    for (let i = 1; i < sorted_chunks.length; i++) {
+        sortedArray = mergeArrays(sortedArray, sorted_chunks[i]);
     }
 
     return sortedArray;

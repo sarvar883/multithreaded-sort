@@ -11,7 +11,7 @@ for (let i = 0; i < length; i++) {
 
 // on how many threads you want to sort the array
 // it is better to set the number of threads to match the number of cores in the CPU
-const THREADS: number = 1;
+const THREADS: number = 8;
 
 async function execute() {
     // start timer here
